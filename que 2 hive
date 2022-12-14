@@ -1,0 +1,26 @@
+Hive
+
+Use keshav;
+
+1st part
+
+create external table custt(cust_id INT,firstname STRING,lastname STRING,age INT,profession STRING)
+row format delimited
+fields terminated by ','
+stored as textfile
+
+LOAD DATA LOCAL INPATH 'custs.txt' OVERWRITE INTO TABLE custt;
+
+Select profession, count(*) as headcount from custt group by profession order by headcount;
+............................................................................................................................
+
+2nd part
+
+create table txnrecords (txnno INT, txndate STRING,custno INT,amount DOUBLE,category STRING,product STRING,city STRING,state STRING,spendy STRING )
+row format delimited
+fields terminated by ','
+stored as textfile;
+
+LOAD DATA LOCAL INPATH 'txns1.txt' OVERWRITE INTO TABLE txnrecords;
+
+Select product,round(sum(amount),2) from txnrecords group by product order by amount desc limit 10;
