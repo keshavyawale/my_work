@@ -1,0 +1,25 @@
+air=spark.read.format("csv").option("header","True").schema(sch).load("hdfs://nameservice1//user/bigcdac432558/yawale/airlines.csv")
+
+air.registerTempTable("airline")
+
+1) What was the highest number of people travelled in which
+Year?
+
+sql1=spark.sql("select year,sum (total_booked_seats) as highest from airline group by year order by highest desc limit 1")
+
+sql1.show()
+
+2) Identifying the highest revenue generation for which year
+
+sql2=spark.sql("select year,sum (Average_revenue_per) as highest from airline group by year order by highest desc limit 1")
+
+sql2.show()
+
+3) Identifying the highest revenue generation for which year and quarter (Common
+group)
+
+sql3=spark.sql("select year,Quarter,(Average_revenue_per * total_booked_seats)/1000000 as avg_in_million from airline order by avg_in_million desc")
+
+sql3.show()
+
+
